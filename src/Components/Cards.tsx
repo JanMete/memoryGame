@@ -22,6 +22,7 @@ export function Cards() {
       { id: 8, img: '/img/nodejs.png', stat: '' },
     ].sort(() => Math.random() - 0.5)
   );
+  const [isChecking, setIsChecking] = useState(false);
 
   const [prev, setPrev] = useState(-1);
 
@@ -45,12 +46,19 @@ export function Cards() {
   }
 
   function handleClick(id: number) {
+    if (isChecking) {
+      return;
+    }
     if (prev === -1) {
       items[id].stat = 'active';
       setItems([...items]);
       setPrev(id);
     } else {
+      setIsChecking(true);
       check(id);
+      setTimeout(() => {
+        setIsChecking(false);
+      }, 1000);
     }
   }
 
